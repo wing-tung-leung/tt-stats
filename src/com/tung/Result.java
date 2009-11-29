@@ -89,4 +89,14 @@ public class Result {
 		return new int[]{scores[6][0], scores[6][1]};
 	}
 
+	public int[] getSetTotals() {
+		int home = 0;
+		int visitor = 0;
+		for (int i = 0 ; i < scores.length ; ++i) {
+			home += scores[i][0];
+			visitor += scores[i][1];
+		}
+		return new int[]{home, visitor};
+	}
+
 }

@@ -20,8 +20,8 @@ public class Main extends MIDlet implements CommandListener {
 	private Form form;
 	private List overview;
 	private Display display;
-	
-	
+	private ResultSender resultSender;
+	private ResultView resultView;
 	
 	private Alert alert;
 
@@ -32,9 +32,9 @@ public class Main extends MIDlet implements CommandListener {
 		
 		result = new Result();
 		
-		form = new EnterResultForm(display, result);
-		overview = new List("Overview", List.EXCLUSIVE);
-		
+		resultSender = new ResultSender(result);
+		resultView = new ResultView(result, display, resultSender);
+		form = new EnterResultForm(display, result, resultView);
 	}
 
 	protected void destroyApp(boolean arg0) throws MIDletStateChangeException {

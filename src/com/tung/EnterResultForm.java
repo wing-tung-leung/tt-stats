@@ -20,10 +20,13 @@ public class EnterResultForm extends Form implements CommandListener {
 	
 	private Result result;
 	
-	public EnterResultForm(Display display, Result result) {
+	private ResultView resultView;
+	
+	public EnterResultForm(Display display, Result result, ResultView resultView) {
 		super("Enter result");
 		this.display = display;
 		this.result = result;
+		this.resultView = resultView;
 		
 		exitCommand = new Command("Exit", Command.EXIT, 1);
 		calculateCommand = new Command("Calculate", Command.SCREEN, 2);
@@ -46,8 +49,7 @@ public class EnterResultForm extends Form implements CommandListener {
 	public void commandAction(Command cmd, Displayable disp) {
 		if (cmd == calculateCommand) {
 			storeResult();
-			ResultView view = new ResultView(result);
-			display.setCurrent(view);
+			display.setCurrent(resultView);
 		}
 	}
 
