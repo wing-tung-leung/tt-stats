@@ -18,6 +18,8 @@ public class Main extends MIDlet implements CommandListener {
 	private Display display;
 	private ResultSender resultSender;
 	private ResultView resultView;
+	private ResultList resultList;
+	private MatchInfo matchInfo;
 	
 	public Main() {
 		display = Display.getDisplay(this);
@@ -28,7 +30,10 @@ public class Main extends MIDlet implements CommandListener {
 		
 		resultSender = new ResultSender(result);
 		resultView = new ResultView(result, display, resultSender);
-		enterResultForm = new EnterResultForm(display, result, resultView);
+		resultList = new ResultList(display);
+		matchInfo = new MatchInfo(display);
+		
+		enterResultForm = new EnterResultForm(display, result, resultView, resultList, matchInfo);
 	}
 
 	protected void destroyApp(boolean arg0) throws MIDletStateChangeException {

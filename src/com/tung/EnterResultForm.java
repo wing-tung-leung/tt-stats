@@ -8,12 +8,18 @@ import javax.microedition.lcdui.Form;
 import javax.microedition.lcdui.Item;
 import javax.microedition.lcdui.List;
 import javax.microedition.lcdui.TextField;
+import javax.microedition.rms.RecordEnumeration;
+import javax.microedition.rms.RecordStore;
+import javax.microedition.rms.RecordStoreException;
+import javax.microedition.rms.RecordStoreFullException;
+import javax.microedition.rms.RecordStoreNotFoundException;
 
 public class EnterResultForm extends Form implements CommandListener {
 
 	private Command exitCommand;
 	private Command calculateCommand;
 	private Command saveCommand;
+	private Command listCommand;
 	
 	private TextField[] input;
 	private Display display;
@@ -21,16 +27,21 @@ public class EnterResultForm extends Form implements CommandListener {
 	private Result result;
 	
 	private ResultView resultView;
+	private Displayable resultList;
+	private Displayable matchInfo;
 	
-	public EnterResultForm(Display display, Result result, ResultView resultView) {
+	public EnterResultForm(Display display, Result result, ResultView resultView, Displayable resultList, Displayable matchInfo) {
 		super("Enter result");
 		this.display = display;
 		this.result = result;
 		this.resultView = resultView;
+		this.resultList = resultList;
+		this.matchInfo = matchInfo;
 		
 		exitCommand = new Command("Exit", Command.EXIT, 1);
 		calculateCommand = new Command("Calculate", Command.SCREEN, 2);
 		saveCommand = new Command("Save", Command.SCREEN, 3);
+		listCommand = new Command("List", Command.SCREEN, 4);
 		
 		input = new TextField[10];
 		for (int i = 0; i < input.length; ++i) {
@@ -43,6 +54,7 @@ public class EnterResultForm extends Form implements CommandListener {
 		addCommand(exitCommand);
 		addCommand(calculateCommand);
 		addCommand(saveCommand);
+		addCommand(listCommand);
 		setCommandListener(this);
 	}
 
@@ -50,6 +62,10 @@ public class EnterResultForm extends Form implements CommandListener {
 		if (cmd == calculateCommand) {
 			storeResult();
 			display.setCurrent(resultView);
+		} else if (cmd == saveCommand) {
+			display.setCurrent(matchInfo);
+		} else if (cmd == listCommand) {
+			display.setCurrent(resultList);
 		}
 	}
 
