@@ -5,6 +5,9 @@ public class Result {
 	final public static int HOME = 100;
 	final public static int VISITOR = -100;
 	
+	private static final int GAMES_PER_PLAYER = 3;
+	private static final int DOUBLE_GAME = 6;
+	
 	private int[][] scores;
 	
 	public Result() {
@@ -24,8 +27,12 @@ public class Result {
 			System.out.println("match " + (match + 1) + ": " + scores[match][0] + " - " + scores[match][1]);
 		}
 	}
-	
-	public int[] getSets(int team, int player) {
+
+	/**
+	 * Returns results per player in 4-tuple. First two elements are game results, and last pair
+	 * contains detailed set totals.
+	 */
+	public int[] getSummary(int team, int player) {
 		if (team != HOME && team != VISITOR) throw new IllegalArgumentException("Invalid team " + team); 
 		if (player < 0 || player > 3) throw new IllegalArgumentException("Invalid player: " + player);
 		
@@ -33,37 +40,53 @@ public class Result {
 		case HOME:
 			switch (player) {
 			case 1:
-				return getSetsFromGames(2, 5, 9);
+				return summarizeGames(2, 5, 9);
 			case 2:
-				return getSetsFromGames(1, 4, 8);
+				return summarizeGames(1, 4, 8);
 			case 3:
-				return getSetsFromGames(0, 3, 7);
+				return summarizeGames(0, 3, 7);
 			}
 		case VISITOR:
 			switch (player) {
 			case 1:
-				return invert(getSetsFromGames(1, 3, 9));
+				return invert(summarizeGames(1, 3, 9));
 			case 2:
-				return invert(getSetsFromGames(0, 5, 8));
+				return invert(summarizeGames(0, 5, 8));
 			case 3:
-				return invert(getSetsFromGames(2, 4, 7));
+				return invert(summarizeGames(2, 4, 7));
 			}
 		}
 		throw new RuntimeException("Internal error");
 	}
 	
 	public static int[] invert(int[] result) {
-		if (result.length != 2) throw new IllegalArgumentException("result is no pair: " + result.toString());
+		if (result.length != 4) throw new IllegalArgumentException("result not 4-tuple: " + result.toString());
+		
 		int swap = result[0];
 		result[0] = result[1];
 		result[1] = swap;
+		swap = result[2];
+		result[2] = result[3];
+		result[3] = swap;
 		return result;
 	}
 
-	private int[] getSetsFromGames(int g1, int g2, int g3) {
-		int won = scores[g1][0] + scores[g2][0] + scores[g3][0];
-		int lost = scores[g1][1] + scores[g2][1] + scores[g3][1];
-		return new int[]{won, lost};
+	private int[] summarizeGames(int g1, int g2, int g3) {
+		int setsWon = scores[g1][0] + scores[g2][0] + scores[g3][0];
+		int setsLost = scores[g1][1] + scores[g2][1] + scores[g3][1];
+		int gamesWon = gameHomeWon(g1) + gameHomeWon(g2) + gameHomeWon(g3);
+		int gamesLost = GAMES_PER_PLAYER - gamesWon;
+		System.out.println(setsWon + '-' + setsLost + " || " + gamesWon + '-' + gamesLost);
+		return new int[]{setsWon, setsLost, gamesWon, gamesLost};
+	}
+
+	/**
+	 * Returns 1 if home player has won, or 0 visitor has won.
+	 * @param gameNumber starting from 0 up till 9
+	 */
+	private int gameHomeWon(int gameNumber) {
+		int[] gameScores = scores[gameNumber];
+		return gameScores[0] > gameScores[1] ? 1 : 0;
 	}
 
 	/** Simple test method. */
@@ -81,12 +104,15 @@ public class Result {
 		r.setScore(10, 3, 0);
 		r.dump();
 		
-		int[] home3 = r.getSets(HOME, 3);
+		int[] home3 = r.getSummary(HOME, 3);
 		System.out.println(home3[0] + " - " + home3[1]);
 	}
 
 	public int[] getDoubleSets() {
-		return new int[]{scores[6][0], scores[6][1]};
+		int[] doubleSetScore = scores[DOUBLE_GAME];
+		int doubleGameWon = doubleSetScore[0] > doubleSetScore[1] ? 1 : 0;
+		int doubleGameLost = doubleSetScore[0] < doubleSetScore[1] ? 1 : 0;
+		return new int[]{doubleSetScore[0], doubleSetScore[1], doubleGameWon, doubleGameLost};
 	}
 
 	public int[] getSetTotals() {
@@ -97,6 +123,21 @@ public class Result {
 			visitor += scores[i][1];
 		}
 		return new int[]{home, visitor};
+	}
+
+	public int[] getTotals() {
+		int[] totals = new int[4];
+		for (int i = 0 ; i < scores.length ; ++i) {
+			int[] gameScore = scores[i];
+			totals[0] += gameScore[0];
+			totals[1] += gameScore[1];
+			if (gameScore[0] > gameScore[1]) {
+				++totals[2];
+			} else {
+				++totals[3];
+			}
+		}
+		return totals;
 	}
 
 }

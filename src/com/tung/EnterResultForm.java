@@ -55,6 +55,7 @@ public class EnterResultForm extends Form implements CommandListener {
 	public void commandAction(Command cmd, Displayable disp) {
 		if (cmd == calculateCommand) {
 			storeResult();
+			resultView.refresh();
 			display.setCurrent(resultView);
 		} else if (cmd == saveCommand) {
 			display.setCurrent(matchInfo);

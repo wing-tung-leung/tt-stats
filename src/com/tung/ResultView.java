@@ -10,6 +10,12 @@ import javax.microedition.lcdui.List;
 // TODO separate view for home and visitor team, switch by single click instead of scrolling?
 public class ResultView extends List implements CommandListener {
 	
+	private static final String SCORE_SEPARATOR = "-";
+
+	private static final String HOME_DESC = "Home";
+
+	private static final String VISITOR_DESC = "Visitor";
+
 	private Result result;
 	
 	private Command gotoSend = new Command("Send result", Command.SCREEN, 1);
@@ -24,24 +30,42 @@ public class ResultView extends List implements CommandListener {
 		this.display = display;
 		this.resultSender = resultSender;
 
-		addResult(Result.HOME, 1);
-		addResult(Result.HOME, 2);
-		addResult(Result.HOME, 3);
-		addDoublesResult(Result.HOME);
-		
-		addResult(Result.VISITOR, 1);
-		addResult(Result.VISITOR, 2);
-		addResult(Result.VISITOR, 3);
-		addDoublesResult(Result.VISITOR);
-		
 		addCommand(gotoSend);
 		setCommandListener(this);
 	}
 	
-	private void addResult(int team, int player) {
-		int[] entry = result.getSets(team, player);
-		String prefix = team == Result.HOME ? "Home " : "Visitor ";  
-		append(prefix + player + ": " + entry[0] + "-" + entry[1], null);
+	public void refresh() {
+		
+		deleteAll();
+		
+		addPlayerResult(Result.HOME, 1);
+		addPlayerResult(Result.HOME, 2);
+		addPlayerResult(Result.HOME, 3);
+		addDoublesResult(Result.HOME);
+		addTotals(Result.HOME);
+		
+		addPlayerResult(Result.VISITOR, 1);
+		addPlayerResult(Result.VISITOR, 2);
+		addPlayerResult(Result.VISITOR, 3);
+		addDoublesResult(Result.VISITOR);
+		addTotals(Result.VISITOR);
+	}
+	
+	private void addPlayerResult(int team, int player) {
+		int[] entry = result.getSummary(team, player);
+		String prefix = Integer.toString(player) + "- " + getDescription(team);
+		StringBuffer summary = new StringBuffer(prefix);
+		summary = addFormattedSummary(summary, entry);
+		
+		append(summary.toString(), null);
+	}
+
+	private StringBuffer addFormattedSummary(StringBuffer summary, int[] entry) {
+		summary.append(": ");
+		summary.append(entry[2]).append(SCORE_SEPARATOR).append(entry[3]);
+		summary.append(" | ");
+		summary.append(entry[0]).append(SCORE_SEPARATOR).append(entry[1]);
+		return summary;
 	}
 	
 	private void addDoublesResult(int team) {
@@ -49,8 +73,28 @@ public class ResultView extends List implements CommandListener {
 		if (team == Result.VISITOR) {
 			entry = Result.invert(entry);
 		}
-		String prefix = team == Result.HOME ? "Home " : "Visitor";  
-		append(prefix + " DBL : " + entry[0] + "-" + entry[1], null);
+		String prefix = "DBL " + getDescription(team); 
+		StringBuffer summary = new StringBuffer(prefix);
+		summary = addFormattedSummary(summary, entry);
+		
+		append(summary.toString(), null);
+	}
+	
+	private void addTotals(int team) {
+		int[] totals = result.getTotals();
+		if (team == Result.VISITOR) {
+			totals = Result.invert(totals);
+		}
+		String prefix = "== " + getDescription(team);
+		StringBuffer summary = new StringBuffer(prefix);
+		summary = addFormattedSummary(summary, totals);
+		
+		append(summary.toString(), null);
+		
+	}
+
+	private String getDescription(int team) {
+		return Result.HOME == team ? HOME_DESC : VISITOR_DESC;
 	}
 
 	public void commandAction(Command cmd, Displayable displayable) {
