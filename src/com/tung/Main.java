@@ -14,12 +14,13 @@ public class Main extends MIDlet implements CommandListener {
 	
 	private Result result;
 	
-	private Form enterResultForm;
 	private Display display;
-	private ResultSender resultSender;
-	private ResultView resultView;
-	private ResultList resultList;
-	private MatchInfo matchInfo;
+	
+	protected Form enterResultForm;
+	protected ResultSender resultSender;
+	protected ResultView resultView;
+	protected ResultList resultList;
+	protected MatchInfo matchInfo;
 	
 	public Main() {
 		display = Display.getDisplay(this);
@@ -29,7 +30,7 @@ public class Main extends MIDlet implements CommandListener {
 		result = new Result();
 		
 		resultSender = new ResultSender(result);
-		resultView = new ResultView(result, display, resultSender);
+		resultView = new ResultView(result, display, this);
 		resultList = new ResultList(display);
 		matchInfo = new MatchInfo(display);
 		

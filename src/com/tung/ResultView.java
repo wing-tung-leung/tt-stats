@@ -14,23 +14,29 @@ public class ResultView extends List implements CommandListener {
 
 	private static final String HOME_DESC = "Home";
 
-	private static final String VISITOR_DESC = "Visitor";
+	private static final String VISITOR_DESC = "Visit";
 
 	private Result result;
 	
 	private Command gotoSend = new Command("Send result", Command.SCREEN, 1);
 	
+	private Command editResult = new Command("Edit result", Command.SCREEN, 1);
+	
 	private Display display;
 	private ResultSender resultSender;
+
+	private Main main;
 	
-	public ResultView(Result result, Display display, ResultSender resultSender) {
+	public ResultView(Result result, Display display, Main main) {
 		super("Results", List.EXCLUSIVE);
+		
+		this.main = main;
 		
 		this.result = result;
 		this.display = display;
-		this.resultSender = resultSender;
 
 		addCommand(gotoSend);
+		addCommand(editResult);
 		setCommandListener(this);
 	}
 	
@@ -53,7 +59,7 @@ public class ResultView extends List implements CommandListener {
 	
 	private void addPlayerResult(int team, int player) {
 		int[] entry = result.getSummary(team, player);
-		String prefix = Integer.toString(player) + "- " + getDescription(team);
+		String prefix = Integer.toString(player) + "-- " + getDescription(team);
 		StringBuffer summary = new StringBuffer(prefix);
 		summary = addFormattedSummary(summary, entry);
 		
@@ -100,6 +106,8 @@ public class ResultView extends List implements CommandListener {
 	public void commandAction(Command cmd, Displayable displayable) {
 		if (cmd == gotoSend) {
 			display.setCurrent(resultSender);
+		} else if (cmd == editResult) {
+			display.setCurrent(main.enterResultForm);
 		}
 	}
 
