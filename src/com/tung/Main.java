@@ -16,7 +16,9 @@ public class Main extends MIDlet implements CommandListener {
 	
 	private Display display;
 	
-	protected Form enterResultForm;
+	public final Command editResult = new Command("Edit result", Command.SCREEN, 1);
+	
+	protected EnterResultForm enterResultForm;
 	protected ResultSender resultSender;
 	protected ResultView resultView;
 	protected ResultList resultList;
@@ -31,10 +33,10 @@ public class Main extends MIDlet implements CommandListener {
 		
 		resultSender = new ResultSender(result);
 		resultView = new ResultView(result, display, this);
-		resultList = new ResultList(display);
-		matchInfo = new MatchInfo(display);
+		resultList = new ResultList(display, this);
+		matchInfo = new MatchInfo(display, this);
 		
-		enterResultForm = new EnterResultForm(display, result, resultView, resultList, matchInfo);
+		enterResultForm = new EnterResultForm(display, result, this);
 	}
 
 	protected void destroyApp(boolean arg0) throws MIDletStateChangeException {

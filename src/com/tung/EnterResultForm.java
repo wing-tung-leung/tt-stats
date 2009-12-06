@@ -19,18 +19,14 @@ public class EnterResultForm extends Form implements CommandListener {
 	private Display display;
 	
 	private Result result;
+
+	private Main main;
 	
-	private ResultView resultView;
-	private Displayable resultList;
-	private Displayable matchInfo;
-	
-	public EnterResultForm(Display display, Result result, ResultView resultView, Displayable resultList, Displayable matchInfo) {
+	public EnterResultForm(Display display, Result result, Main main) {
 		super("Enter result");
 		this.display = display;
 		this.result = result;
-		this.resultView = resultView;
-		this.resultList = resultList;
-		this.matchInfo = matchInfo;
+		this.main = main;
 		
 		exitCommand = new Command("Exit", Command.EXIT, 1);
 		calculateCommand = new Command("Calculate", Command.SCREEN, 2);
@@ -55,12 +51,15 @@ public class EnterResultForm extends Form implements CommandListener {
 	public void commandAction(Command cmd, Displayable disp) {
 		if (cmd == calculateCommand) {
 			storeResult();
-			resultView.refresh();
-			display.setCurrent(resultView);
+			main.resultView.refresh();
+			display.setCurrent(main.resultView);
+			
 		} else if (cmd == saveCommand) {
-			display.setCurrent(matchInfo);
+			display.setCurrent(main.matchInfo);
+			
 		} else if (cmd == listCommand) {
-			display.setCurrent(resultList);
+			main.resultList.refresh();
+			display.setCurrent(main.resultList);
 		}
 	}
 

@@ -21,6 +21,8 @@ public class MatchInfo extends Form implements CommandListener {
 	
 	private Display display;
 	
+	private Main main;
+	
 	private TextField matchNumber;
 	private TextField homeTeam;
 	private TextField visitorTeam;
@@ -30,12 +32,14 @@ public class MatchInfo extends Form implements CommandListener {
 	
 	private Command saveCommand;
 	
-	public MatchInfo(Display display) {
+	public MatchInfo(Display display, Main main) {
 		super("Match info");
 		this.display = display;
+		this.main = main;
 		
 		saveCommand = new Command("Save", Command.SCREEN, 3);
 		addCommand(saveCommand);
+		addCommand(main.editResult);
 		setCommandListener(this);
 		
 		matchNumber = new TextField("Match", null, 5, TextField.NUMERIC);
@@ -124,6 +128,8 @@ public class MatchInfo extends Form implements CommandListener {
 	public void commandAction(Command cmd, Displayable arg1) {
 		if (cmd == saveCommand) {
 			save();
+		} else if (cmd == main.editResult) {
+			display.setCurrent(main.enterResultForm);
 		}
 		
 	}

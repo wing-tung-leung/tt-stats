@@ -20,8 +20,6 @@ public class ResultView extends List implements CommandListener {
 	
 	private Command gotoSend = new Command("Send result", Command.SCREEN, 1);
 	
-	private Command editResult = new Command("Edit result", Command.SCREEN, 1);
-	
 	private Display display;
 	private ResultSender resultSender;
 
@@ -36,7 +34,7 @@ public class ResultView extends List implements CommandListener {
 		this.display = display;
 
 		addCommand(gotoSend);
-		addCommand(editResult);
+		addCommand(main.editResult);
 		setCommandListener(this);
 	}
 	
@@ -106,7 +104,7 @@ public class ResultView extends List implements CommandListener {
 	public void commandAction(Command cmd, Displayable displayable) {
 		if (cmd == gotoSend) {
 			display.setCurrent(resultSender);
-		} else if (cmd == editResult) {
+		} else if (cmd == main.editResult) {
 			display.setCurrent(main.enterResultForm);
 		}
 	}

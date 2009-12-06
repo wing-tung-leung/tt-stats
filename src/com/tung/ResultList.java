@@ -14,19 +14,24 @@ import javax.microedition.rms.RecordStoreNotOpenException;
 public class ResultList extends List implements CommandListener {
 
 	private Display display;
+	private Main main;
 	
 	private Command refreshCommand;
 
-	public ResultList(Display display) {
+	public ResultList(Display display, Main main) {
 		super("Match list", List.EXCLUSIVE);
+		
+		this.display = display;
+		this.main = main;
 		
 		refreshCommand = new Command("Refresh", Command.SCREEN, 1);
 		
 		addCommand(refreshCommand);
+		addCommand(main.editResult);
 		setCommandListener(this);
 	}
 
-	private void refresh() {
+	public void refresh() {
 		this.deleteAll();
 		
 		RecordStore store = null;
@@ -66,6 +71,9 @@ public class ResultList extends List implements CommandListener {
 	public void commandAction(Command cmd, Displayable arg1) {
 		if (cmd == refreshCommand) {
 			refresh();
+			
+		} else if (cmd == main.editResult) {
+			display.setCurrent(main.enterResultForm);
 		}
 
 	}
