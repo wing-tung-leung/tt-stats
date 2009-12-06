@@ -76,7 +76,6 @@ public class Result {
 		int setsLost = scores[g1][1] + scores[g2][1] + scores[g3][1];
 		int gamesWon = gameHomeWon(g1) + gameHomeWon(g2) + gameHomeWon(g3);
 		int gamesLost = GAMES_PER_PLAYER - gamesWon;
-		System.out.println(setsWon + '-' + setsLost + " || " + gamesWon + '-' + gamesLost);
 		return new int[]{setsWon, setsLost, gamesWon, gamesLost};
 	}
 
