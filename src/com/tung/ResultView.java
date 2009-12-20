@@ -100,7 +100,12 @@ public class ResultView extends List implements CommandListener {
 
 	public void commandAction(Command cmd, Displayable displayable) {
 		if (cmd == main.navigation.sendCommand) {
-			display.setCurrent(main.resultSender);
+			if (main.matchInfo.validateInput()) {
+				display.setCurrent(main.resultSender);
+			} else {
+				display.setCurrent(main.matchInfo);
+			}
+			
 		} else if (cmd == main.navigation.editResult) {
 			display.setCurrent(main.enterResultForm);
 		}
