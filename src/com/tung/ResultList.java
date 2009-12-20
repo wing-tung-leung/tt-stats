@@ -11,6 +11,9 @@ import javax.microedition.rms.RecordStoreFullException;
 import javax.microedition.rms.RecordStoreNotFoundException;
 import javax.microedition.rms.RecordStoreNotOpenException;
 
+/**
+ * Overview of saved match results. Supports selecting single match to view details. 
+ */
 public class ResultList extends List implements CommandListener {
 
 	private Display display;
