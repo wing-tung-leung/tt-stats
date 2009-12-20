@@ -5,7 +5,7 @@ import javax.microedition.lcdui.Command;
 public class Navigation {
 
 	protected final Command editResult = new Command("Edit result", Command.SCREEN, 1);
-	protected final Command showSummary = new Command("Show summary", Command.SCREEN, 2);
+	protected final Command showSummary = new Command("Summary", Command.SCREEN, 2);
 	
 	protected final Command sendCommand;
 	protected final Command saveCommand;
