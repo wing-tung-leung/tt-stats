@@ -28,6 +28,13 @@ public class Result {
 		}
 	}
 
+	/** Appends in short format the score details to string buffer. */
+	public void dump(StringBuffer buffer) {
+		for (int match = 0 ; match < scores.length ; ++match) {
+			buffer.append(scores[match][0]).append("-").append(scores[match][1]).append(Main.NEWLINE);
+		}
+	}
+
 	/**
 	 * Returns results per player in 4-tuple. First two elements are game results, and last pair
 	 * contains detailed set totals.

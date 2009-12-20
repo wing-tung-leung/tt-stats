@@ -30,7 +30,7 @@ public class ResultList extends List implements CommandListener {
 		refreshCommand = new Command("Refresh", Command.SCREEN, 1);
 		
 		addCommand(refreshCommand);
-		addCommand(main.editResult);
+		addCommand(main.navigation.editResult);
 		setCommandListener(this);
 	}
 
@@ -75,7 +75,7 @@ public class ResultList extends List implements CommandListener {
 		if (cmd == refreshCommand) {
 			refresh();
 			
-		} else if (cmd == main.editResult) {
+		} else if (cmd == main.navigation.editResult) {
 			display.setCurrent(main.enterResultForm);
 		}
 

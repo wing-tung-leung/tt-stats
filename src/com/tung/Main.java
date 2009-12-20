@@ -10,13 +10,13 @@ import javax.microedition.midlet.MIDletStateChangeException;
 
 public class Main extends MIDlet implements CommandListener {
 
+	public static final char NEWLINE = '\n';
+
 	private Command exitCommand;
 	
-	private Result result;
+	protected Result result;
 	
 	private Display display;
-	
-	public final Command editResult = new Command("Edit result", Command.SCREEN, 1);
 	
 	protected EnterResultForm enterResultForm;
 	protected ResultSender resultSender;
@@ -24,17 +24,21 @@ public class Main extends MIDlet implements CommandListener {
 	protected ResultList resultList;
 	protected MatchInfo matchInfo;
 	
+	protected Navigation navigation;
+	
 	public Main() {
 		display = Display.getDisplay(this);
 		
 		exitCommand = new Command("Exit", Command.EXIT, 1);
 		
-		result = new Result();
+		navigation = new Navigation();
 		
-		resultSender = new ResultSender(result);
+		result = new Result();
+		matchInfo = new MatchInfo(display, this);
+		
+		resultSender = new ResultSender(display, result, this);
 		resultView = new ResultView(result, display, this);
 		resultList = new ResultList(display, this);
-		matchInfo = new MatchInfo(display, this);
 		
 		enterResultForm = new EnterResultForm(display, result, this);
 	}
