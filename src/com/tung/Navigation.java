@@ -10,11 +10,15 @@ public class Navigation {
 	protected final Command sendCommand;
 	protected final Command saveCommand;
 	protected final Command listCommand;
+	protected final Command showHomeResult;
+	protected final Command showVisitorResult;
 	
 	public Navigation() {
 		sendCommand = new Command("Send", Command.SCREEN, 1);
 		saveCommand = new Command("Save", Command.SCREEN, 3);
 		listCommand = new Command("List", Command.SCREEN, 4);
+		showHomeResult = new Command("Home result", Command.SCREEN, 5);
+		showVisitorResult = new Command("Visitor result", Command.SCREEN, 6);
 	}
 
 }

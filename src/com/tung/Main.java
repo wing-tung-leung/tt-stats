@@ -20,7 +20,7 @@ public class Main extends MIDlet implements CommandListener {
 	
 	protected EnterResultForm enterResultForm;
 	protected ResultSender resultSender;
-	protected ResultView resultView;
+	protected ResultView homeResultView, visitorResultView;
 	protected ResultList resultList;
 	protected MatchInfo matchInfo;
 	
@@ -37,7 +37,8 @@ public class Main extends MIDlet implements CommandListener {
 		matchInfo = new MatchInfo(display, this);
 		
 		resultSender = new ResultSender(display, result, this);
-		resultView = new ResultView(result, display, this);
+		homeResultView = new HomeResultView(result, display, this);
+		visitorResultView = new VisitorResultView(result, display, this);
 		resultList = new ResultList(display, this);
 		
 		enterResultForm = new EnterResultForm(display, result, this);

@@ -8,13 +8,13 @@ import javax.microedition.lcdui.List;
 
 // TODO add totals per team
 // TODO separate view for home and visitor team, switch by single click instead of scrolling?
-public class ResultView extends List implements CommandListener {
+public abstract class ResultView extends List implements CommandListener {
 	
 	private static final String SCORE_SEPARATOR = "-";
 
-	private static final String HOME_DESC = "Home";
+	protected static final String HOME_DESC = "Home";
 
-	private static final String VISITOR_DESC = "Visit";
+	protected static final String VISITOR_DESC = "Visit";
 
 	private Result result;
 	
@@ -22,8 +22,8 @@ public class ResultView extends List implements CommandListener {
 
 	private Main main;
 	
-	public ResultView(Result result, Display display, Main main) {
-		super("Results", List.EXCLUSIVE);
+	public ResultView(Result result, Display display, Main main, String team) {
+		super("Result " + team, List.EXCLUSIVE);
 		
 		this.main = main;
 		
@@ -35,24 +35,7 @@ public class ResultView extends List implements CommandListener {
 		setCommandListener(this);
 	}
 	
-	public void refresh() {
-		
-		deleteAll();
-		
-		addPlayerResult(Result.HOME, 1);
-		addPlayerResult(Result.HOME, 2);
-		addPlayerResult(Result.HOME, 3);
-		addDoublesResult(Result.HOME);
-		addTotals(Result.HOME);
-		
-		addPlayerResult(Result.VISITOR, 1);
-		addPlayerResult(Result.VISITOR, 2);
-		addPlayerResult(Result.VISITOR, 3);
-		addDoublesResult(Result.VISITOR);
-		addTotals(Result.VISITOR);
-	}
-	
-	private void addPlayerResult(int team, int player) {
+	protected void addPlayerResult(int team, int player) {
 		int[] entry = result.getSummary(team, player);
 		String prefix = Integer.toString(player) + "-- " + getDescription(team);
 		StringBuffer summary = new StringBuffer(prefix);
@@ -69,7 +52,7 @@ public class ResultView extends List implements CommandListener {
 		return summary;
 	}
 	
-	private void addDoublesResult(int team) {
+	protected void addDoublesResult(int team) {
 		int[] entry = result.getDoubleSets();
 		if (team == Result.VISITOR) {
 			entry = Result.invert(entry);
@@ -81,7 +64,7 @@ public class ResultView extends List implements CommandListener {
 		append(summary.toString(), null);
 	}
 	
-	private void addTotals(int team) {
+	protected void addTotals(int team) {
 		int[] totals = result.getTotals();
 		if (team == Result.VISITOR) {
 			totals = Result.invert(totals);
@@ -94,7 +77,7 @@ public class ResultView extends List implements CommandListener {
 		
 	}
 
-	private String getDescription(int team) {
+	protected String getDescription(int team) {
 		return Result.HOME == team ? HOME_DESC : VISITOR_DESC;
 	}
 
@@ -108,8 +91,15 @@ public class ResultView extends List implements CommandListener {
 			
 		} else if (cmd == main.navigation.editResult) {
 			display.setCurrent(main.enterResultForm);
+			
+		} else if (cmd == main.navigation.showHomeResult) {
+			display.setCurrent(main.homeResultView);
+			
+		} else if (cmd == main.navigation.showVisitorResult) {
+			display.setCurrent(main.visitorResultView);
 		}
 	}
 
+	abstract public void refresh();
 
 }

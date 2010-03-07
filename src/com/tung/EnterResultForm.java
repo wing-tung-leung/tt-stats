@@ -50,8 +50,9 @@ public class EnterResultForm extends Form implements CommandListener {
 			display.setCurrent(main.resultList);
 		} else if (cmd == main.navigation.showSummary) {
 			storeResult();
-			main.resultView.refresh();
-			display.setCurrent(main.resultView);
+			main.homeResultView.refresh();
+			main.visitorResultView.refresh();
+			display.setCurrent(main.homeResultView);
 
 		} else if (cmd == main.navigation.saveCommand) {
 			storeResult();
