@@ -1,8 +1,7 @@
-MIDlet-1: TTK Stats,,com.tung.Main
-MIDlet-2: NewTicketAuction,,example.auction.NewTicketAuction
-MIDlet-Jar-URL: ttk-stats.jar
-MIDlet-Name: TTK Stats
-MIDlet-Vendor: Tung
 MIDlet-Version: 1.0.0
+MIDlet-Vendor: Tung
+MIDlet-Jar-URL: ttk-stats.jar
 MicroEdition-Configuration: CLDC-1.0
+MIDlet-1: TTK Stats,,com.tung.Main
 MicroEdition-Profile: MIDP-2.0
+MIDlet-Name: TTK Stats
