@@ -1,7 +1,7 @@
-MIDlet-Version: 1.0.0
+MIDlet-Version: 0.1.1
 MIDlet-Vendor: Tung
-MIDlet-Jar-URL: ttk-stats.jar
+MIDlet-Jar-URL: tt-stats-0.1.1.jar
 MicroEdition-Configuration: CLDC-1.0
 MIDlet-1: TTK Stats,,com.tung.Main
 MicroEdition-Profile: MIDP-2.0
-MIDlet-Name: TTK Stats
+MIDlet-Name: TT Stats
