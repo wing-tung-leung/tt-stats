@@ -1,6 +1,11 @@
 package com.tung;
 
+import javax.microedition.lcdui.Alert;
+import javax.microedition.lcdui.AlertType;
+import javax.microedition.lcdui.Command;
+import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
+import javax.microedition.lcdui.Displayable;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
@@ -35,7 +40,7 @@ public class Main extends MIDlet {
 		
 		enterResultForm = new EnterResultForm(display, result, this);
 	}
-
+	
 	protected void destroyApp(boolean arg0) throws MIDletStateChangeException { }
 
 	protected void pauseApp() { }

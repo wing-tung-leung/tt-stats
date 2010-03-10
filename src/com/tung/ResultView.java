@@ -29,9 +29,12 @@ public abstract class ResultView extends List implements CommandListener {
 		
 		this.result = result;
 		this.display = display;
+		
+		addCommand(main.navigation.exitCommand);
 
 		addCommand(main.navigation.sendCommand);
 		addCommand(main.navigation.editResult);
+		
 		setCommandListener(this);
 	}
 	
@@ -97,6 +100,9 @@ public abstract class ResultView extends List implements CommandListener {
 			
 		} else if (cmd == main.navigation.showVisitorResult) {
 			display.setCurrent(main.visitorResultView);
+			
+		} else if (cmd == main.navigation.exitCommand) {
+			main.notifyDestroyed();
 		}
 	}
 
