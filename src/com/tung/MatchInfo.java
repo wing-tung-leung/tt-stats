@@ -28,12 +28,16 @@ public class MatchInfo extends Form implements CommandListener {
 	
 	private Main main;
 	
-	private TextField matchNumber;
-	private TextField homeTeam;
-	private TextField visitorTeam;
+	private TextField matchNumber; // short, 2 bytes
+	private TextField homeTeam; // char, 4 bytes
+	private TextField visitorTeam; // char 4 bytes
 	
-	private TextField[] homePlayers;
-	private TextField[] visitorPlayers;
+	private TextField[] homePlayers; // 4 integers, 16 bytes
+	private TextField[] visitorPlayers; // 4 integers, 16 bytes
+
+	private short homeClub; // short, 2 bytes
+	private short visitorClub; // short, 2 bytes
+	private byte doublesPlayers; // 1 byte
 	
 	private Command saveCommand;
 	private Command playerDetailCommand;

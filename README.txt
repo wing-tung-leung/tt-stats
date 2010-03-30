@@ -26,3 +26,9 @@ Other useful links:
 
 http://www.siltala.net/2007/07/25/mounting-a-nokia-phone-a-little-bit-easier/
 
+
+Sending sms
+-----------
+Want to send 3 match results into single SMS. Limit of 140 bytes per message.
+Roughly 45 bytes per match result available.
+

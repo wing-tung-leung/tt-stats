@@ -9,7 +9,8 @@ import javax.wireless.messaging.MessageConnection;
 import javax.wireless.messaging.TextMessage;
 
 /**
- * Message sender service. Separate thread because network IO should not block. 
+ * Message sender service. Separate thread because network IO should not block.
+ * Maximum individual sizes of 160 7-bit characters or 140 8-bit characters.
  */
 public class TextSender extends Thread {
 	
